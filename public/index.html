@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upali svetlo</title>
+    <link href="stles.css" rel="stylesheet">
+</head>
+<body>
+    <p>Fajl</p>
+    <input type="checkbox" name="light" id="light">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script> 
+    <script>
+        var socket = io(); 
+
+            window.onload = () => { 
+            var lightbox = document.querySelector("#light");
+            lightbox.addEventListener("change", () => { 
+                socket.emit("light", Number(lightbox.checked)); 
+            });
+        };
+
+            socket.on('light', (data) => { 
+                document.querySelector("#light").checked = data; 
+                socket.emit("light", data); 
+            });
+    </script>
+</body>
+</html>
