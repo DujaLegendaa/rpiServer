@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dujina Lampa</title>
+    <link type="text/css" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" rel="stylesheet">
+    <link type="text/css" href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns">
+                    <div class="column is-half is-offset-one-quarter">
+                        <h1 class="title is-1">Dujina Lampa</h1>
+                        <input type="checkbox" name="light" id="light">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script> 
+    <script>
+        var socket = io(); 
+
+        window.onload = () => { 
+        var lightbox = document.querySelector("#light");
+        lightbox.addEventListener("change", () => { 
+            socket.emit("light", Number(lightbox.checked)); 
+            if(document.querySelector("#light").checked){
+                document.querySelector("html").style.backgroundColor = "rgb(255,255,255)";
+                document.querySelector(".title").style.color = "rgb(0,0,0)";
+            } else {
+                document.querySelector("html").style.backgroundColor = "rgb(0,0,0)";
+                document.querySelector(".title").style.color = "rgb(255,255,255)";
+            }
+        });
+        };
+
+        socket.on('light', (data) => { 
+            document.querySelector("#light").checked = data; 
+            socket.emit("light", data); 
+        });
+
+        
+    </script>
+</body>
+</html>

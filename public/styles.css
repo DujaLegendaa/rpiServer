@@ -1,0 +1,23 @@
+html {
+    background-color: black;
+}
+
+.title {
+    text-align: center;
+    color: white;
+}
+
+#light {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: relative;
+    margin-left: 30%;
+    width: 200px;
+    height: 200px;
+    background-color: white;
+}
+
+#light:checked {
+    background-color: black;
+}

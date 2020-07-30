@@ -1,24 +1,19 @@
-let requireListener = (req, res) => {
-    res.writeHead(200, {
-        "Content-Type": "text/html"
-    });
+const express = require("express")
+const path = require("path")
+const app = express()
 
-    fs.readFile(__dirname + '/public/index.html', null, (err, data) => {
-        if(err) {
-            res.writeHead(404);
-            res.write("File not found");
-        } else {
-            res.write(data);
-        }
-        res.end();
-    });
-} 
+app.use(express.static(path.join(__dirname, 'public')))
+app.set('views', path.join(__dirname, 'public'));
 
-const http = require("http").createServer(requireListener);
+const http = require("http").createServer(app);
 const fs = require("fs")
 var io = require('socket.io')(http)
 
 http.listen(8000)
+
+app.get("/", (req, res) => {
+    res.render("index.ejs")
+})
 
 io.sockets.on('connection', (socket) => {// WebSocket Connection
     var lightvalue = 0; //static variable for current status
